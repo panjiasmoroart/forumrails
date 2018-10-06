@@ -1,0 +1,23 @@
+.thread {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ececec;
+  overflow: hidden;
+}
+
+.meta {
+  margin-bottom: 10px;
+}
+
+.content {
+  /*margin-bottom: 10px;*/
+}
+
+.count {
+  margin-bottom: 10px;
+}
+
+.thread-detail-title {
+  color: #337ab7;
+}
+
+

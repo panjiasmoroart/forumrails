@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">  
+    
+    <!-- pastikan hanya user yg sudah login yg bisa membuat forum diskusi -->
+    <% if user_signed_in?  %>
+    <%= link_to "Buat Diskusi", new_forum_thread_path, class: 'btn btn-primary'  %>
+    <% end %>
+
+    <!-- thread -->
+    <% @threads.each do |t| %>
+    <div class="thread">
+      <h4><%= link_to t.title.titleize, forum_thread_path(t)  %> 
+        <!-- atau kalo mau rapih kita bisa buat method pada model forum_thread 
+        sebelum menggunakan method
+        t.sticky_order != 100
+        setelah
+        t.sticky?
+         -->
+        <% if t.sticky? %>
+          <span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>
+        <% end %>
+      </h4> 
+      
+      <div class="meta"><%= I18n.l(t.created_at.to_date) %> oleh <%= t.user.name  %></div>
+
+      <div class="content">
+        <p>
+          <%= truncate t.content, length: 200  %>
+        </p>
+      </div>
+
+      <!-- tampilkan pinit setelah user login dan hanya user yg mempunyai level admin yg bisa buat pinit  -->
+      <% if user_signed_in? && current_user.admin?  %>
+      <!-- karena membuat form terlalu ribet kita bisa menggunakan link biasa -->
+          <div class="action">
+            <%= link_to 'Pin It', pinit_forum_thread_path(t), class: 'btn btn-sm btn-warning', method: :put  %>
+          </div>
+      <% end %>
+
+      <div class="count pull-right">
+        <%= t.forum_posts_count  %> obrolan
+      </div>
+    </div><!-- end thread -->
+    <% end  %>
+
+    <%= will_paginate @threads, renderer: BootstrapPagination::Rails  %>
+
+
+  </div> <!-- end col-md-6  --> 
+</div><!-- end row  -->
+
