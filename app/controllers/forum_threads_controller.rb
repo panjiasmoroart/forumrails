@@ -15,7 +15,7 @@ class ForumThreadsController < ApplicationController
       #render plain: @threads.inspect    
     end
 
-    @threads.paginate(per_page: 5, page: params[:page])
+    @threads =  @threads.paginate(per_page: 5, page: params[:page])
     
   end
 
