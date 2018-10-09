@@ -7,13 +7,15 @@ class ForumThreadsController < ApplicationController
     #/?search=belajar   (contoh misalkan kita mempunyai params search dan valuenya ada belajar)
     #apakah ada params search 
     if params[:search]
-      @threads = ForumThread.where('title like ?', "%#{params[:search]}%").order(id: :desc).paginate(per_page: 5, page: params[:page])
+      @threads = ForumThread.where('title ilike ?', "%#{params[:search]}%").order(id: :desc)
     else
       #@threads = ForumThread.all
       #urutkan dulu berdasarkan stiknya secara asc baru berdasarkan id secara desc
-      @threads = ForumThread.order(sticky_order: :asc).order(id: :desc).paginate(per_page: 5, page: params[:page])
+      @threads = ForumThread.order(sticky_order: :asc).order(id: :desc)
       #render plain: @threads.inspect    
     end
+
+    @threads.paginate(per_page: 5, page: params[:page])
     
   end
 
